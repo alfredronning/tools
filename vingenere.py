@@ -4,10 +4,26 @@ A = ord("A")
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def decode(inp, key):
-    return "".join(chr((ord(inp[i])-A-ord(key[i%len(key)])-A+26)%26+A) if inp[i] in ALPHABET else inp[i] for i in range(len(inp)))
+    res = ""
+    keyindex = 0
+    for i in range(len(inp)):
+        if not inp[i] in ALPHABET:
+            res += inp[i]
+        else:
+            res += chr((ord(inp[i])-ord(key[keyindex%len(key)])+26)%26+A)
+            keyindex += 1
+    return res
 
 def encode(inp, key):
-    return "".join(chr((ord(inp[i])-A+ord(key[i%len(key)])-A)%26+A) if inp[i] in ALPHABET else inp[i] for i in range(len(inp)))
+    res = ""
+    keyindex = 0
+    for i in range(len(inp)):
+        if not inp[i] in ALPHABET:
+            res += inp[i]
+        else:
+            res += chr((ord(inp[i])+ord(key[keyindex%len(key)])-2*A)%26+A)
+            keyindex += 1
+    return res
 
 def main(d=False):
     inp = stdin.read().strip().upper()
