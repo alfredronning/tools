@@ -2,6 +2,8 @@ from sys import stdin, argv
 
 def main():
     inp = stdin.read().strip()
+    if inp[0:2] == "0x":
+        inp = inp[2:]
     print("".join(chr(int(inp[i*2:i*2+2], 16)) for i in range(len(inp)//2)))
 
 def print_help():
